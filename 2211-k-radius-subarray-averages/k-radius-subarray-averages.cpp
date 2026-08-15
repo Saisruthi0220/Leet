@@ -2,20 +2,26 @@ class Solution {
 public:
     vector<int> getAverages(vector<int>& nums, int k) {
         int n = nums.size();
-        int windowSize = 2 * k + 1;
         vector<int> ans(n, -1);
 
-        if (n < windowSize) {
+        int window = 2 * k + 1;
+
+        if(window > n)
             return ans;
-        }
 
-        vector<long long> prefixSum(n + 1);
-        for (int i = 0; i < n; ++i) {
-            prefixSum[i + 1] = prefixSum[i] + nums[i];
-        }
+        long long sum = 0;
 
-        for (int i = k; i + k < n; ++i) {
-            ans[i] = (prefixSum[i + k + 1] - prefixSum[i - k]) / windowSize;
+        for(int i = 0; i < window; i++)
+            sum += nums[i];
+
+        ans[k] = sum / window;
+
+        for(int i = window; i < n; i++) {
+            sum += nums[i];
+            sum -= nums[i - window];
+
+            int center = i - k;
+            ans[center] = sum / window;
         }
 
         return ans;
