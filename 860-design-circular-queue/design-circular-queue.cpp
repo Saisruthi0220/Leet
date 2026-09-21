@@ -10,7 +10,7 @@ public:
         front=0;
         rear=0;
         size=0;
-        q.resize(k);
+        q=vector<int>(capacity);
     }
     
     bool enQueue(int value) {
